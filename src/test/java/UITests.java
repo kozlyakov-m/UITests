@@ -44,7 +44,8 @@ public class UITests
     @Test
     @DisplayName("Отправить сообщение")
     public void Test3(){
-        sleep(5000); //ждем загрузку сообщений ("умное ожидание" selenide здесь не работает)
+        //sleep(5000); //ждем загрузку сообщений ("умное ожидание" selenide здесь не работает)
+        page.getMessages().shouldHave(CollectionCondition.sizeGreaterThan(0));
         int numberOfMessages = page.getMessages().size();
         String msg = "test";
         page.sendMessage(msg);
