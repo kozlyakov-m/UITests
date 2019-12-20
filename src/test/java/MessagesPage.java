@@ -13,6 +13,7 @@ public class MessagesPage{
     private ElementsCollection messages = $$x("//div[@id='message-box']/div/div/div");
     private ElementsCollection chats = $$(".bg-blue-200>div>div");
     private SelenideElement deletedSuccessMsg = $x("//*[@data-icon='check-circle']/../..");
+    private SelenideElement messageBoxHeader = $x("//*[@id='direct-message-box']/div");
 
     public MessagesPage(){
         open("https://goodworkfor.life/");
@@ -31,7 +32,7 @@ public class MessagesPage{
     }
 
     public void sendMessage(String text){
-        $("#send-message").setValue(text).pressEnter();
+        getTextarea().setValue(text).pressEnter();
     }
 
     public SelenideElement getLastMessage(){
@@ -45,5 +46,17 @@ public class MessagesPage{
 
     public SelenideElement getDeletedSuccessMsg(){
         return deletedSuccessMsg;
+    }
+
+    public SelenideElement getMessageBoxHeader(){
+        return messageBoxHeader;
+    }
+
+    public SelenideElement getMessageBox() {
+        return $("#message-box");
+    }
+
+    public SelenideElement getTextarea(){
+        return $("#send-message");
     }
 }

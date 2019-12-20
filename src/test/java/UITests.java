@@ -26,7 +26,7 @@ public class UITests
     @DisplayName("Отобразилось модальное окно сообщений")
     public void Test1() {
         //MessagesPage page = new MessagesPage();
-        $x("//*[@id='direct-message-box']/div") //стоит ли вынести в метод класса MessagePage?
+        page.getMessageBoxHeader()
                 .shouldBe(Condition.visible)
                 .shouldHave(Condition.text("Your Messages"));
     }
@@ -37,19 +37,24 @@ public class UITests
 
         //Assert.assertFalse(page.getMessages().isEmpty());
         page.selectChat(1);
-        $("#message-box").shouldNotHave(Condition.text("Click on the profile pic on left to see interaction with that user"));
-
+        page.getMessageBox().shouldNotHave(Condition.text("Click on the profile pic on left to see interaction with that user"));
+        page.getTextarea().shouldNotHave(Condition.cssValue("disabled", "disabled"));
     }
 
     @Test
     @DisplayName("Отправить сообщение")
     public void Test3(){
         //sleep(5000); //ждем загрузку сообщений ("умное ожидание" selenide здесь не работает)
-        page.getMessages().shouldHave(CollectionCondition.sizeGreaterThan(0));
+        page.getMessages().shouldHave(CollectionCondition.sizeGreaterThan(0)); //вместо sleep
         int numberOfMessages = page.getMessages().size();
         String msg = "test";
         page.sendMessage(msg);
+        page.getLastMessage().scrollTo();
+
         sleep(5000); //без sleep не работает!
+        /*проверку изменения числа сообщений можно перенести сюда и убрать sleep*/
+
+
         int newNumberOfMessages = page.getMessages().size();
 
         //System.out.println(numberOfMessages);
